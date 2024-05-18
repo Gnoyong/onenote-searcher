@@ -4532,11 +4532,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "G:\\onenote-searcher\\MyConsoleApp\\MyConsoleApp.csproj",
-      "projectName": "MyConsoleApp",
-      "projectPath": "G:\\onenote-searcher\\MyConsoleApp\\MyConsoleApp.csproj",
+      "projectUniqueName": "G:\\onenote-searcher\\OneNoteSearcher.csproj",
+      "projectName": "OneNoteSearcher",
+      "projectPath": "G:\\onenote-searcher\\OneNoteSearcher.csproj",
       "packagesPath": "C:\\Users\\yong1\\.nuget\\packages\\",
-      "outputPath": "G:\\onenote-searcher\\MyConsoleApp\\obj\\",
+      "outputPath": "G:\\onenote-searcher\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\yong1\\AppData\\Roaming\\NuGet\\NuGet.Config",

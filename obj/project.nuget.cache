@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "IDvnXoOlwEuwFMDkOZJe+iKOhcgVvgKheJoq+ZMipe0/qRdTqIyZr8Tz8xpBpCNOtZSuB6iw14M88aDPYgaU7g==",
+  "dgSpecHash": "YCPOZ5vtqywUnBjy5e3/nTn4SILq9YIVQ9oC2JChbW1b2bYxIiQAEsqcrJWl7ZHaFI3ioPNyQZP7af8VMR0F0Q==",
   "success": true,
-  "projectFilePath": "G:\\onenote-searcher\\MyConsoleApp\\MyConsoleApp.csproj",
+  "projectFilePath": "G:\\onenote-searcher\\OneNoteSearcher.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\yong1\\.nuget\\packages\\interop.microsoft.office.interop.onenote\\1.1.0\\interop.microsoft.office.interop.onenote.1.1.0.nupkg.sha512",
     "C:\\Users\\yong1\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",

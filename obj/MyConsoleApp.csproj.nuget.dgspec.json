@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "G:\\onenote-searcher\\MyConsoleApp\\MyConsoleApp.csproj": {}
+    "G:\\onenote-searcher\\MyConsoleApp.csproj": {}
   },
   "projects": {
-    "G:\\onenote-searcher\\MyConsoleApp\\MyConsoleApp.csproj": {
+    "G:\\onenote-searcher\\MyConsoleApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\onenote-searcher\\MyConsoleApp\\MyConsoleApp.csproj",
+        "projectUniqueName": "G:\\onenote-searcher\\MyConsoleApp.csproj",
         "projectName": "MyConsoleApp",
-        "projectPath": "G:\\onenote-searcher\\MyConsoleApp\\MyConsoleApp.csproj",
+        "projectPath": "G:\\onenote-searcher\\MyConsoleApp.csproj",
         "packagesPath": "C:\\Users\\yong1\\.nuget\\packages\\",
-        "outputPath": "G:\\onenote-searcher\\MyConsoleApp\\obj\\",
+        "outputPath": "G:\\onenote-searcher\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\yong1\\AppData\\Roaming\\NuGet\\NuGet.Config",
