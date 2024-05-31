@@ -7,63 +7,91 @@ using Newtonsoft.Json;
 using ScipBe.Common.Office.OneNote;
 using System.Timers;
 using System.Threading;
+using System.CommandLine;
+using System.CommandLine.Invocation;
 using Microsoft.Office.Interop.OneNote;
+
 
 class Program
 {
     static System.Timers.Timer timer;
+    static RootCommand rootCommand;
 
     static async Task Main(string[] args)
     {
-        // 创建一个全局唯一的互斥体
-        using (Mutex mutex = new Mutex(true, "OneNoteSearcher", out bool createdNew))
-        {
-            if (createdNew)
-            {
-                // 设置 HTTP 服务监听地址和端口号
-                string ipAddress = "127.0.0.1";
-                int port = 12345;
+        rootCommand = new RootCommand();
+        var waitingTimeOption = new Option<int>(
+            new string[] { "--time", "-t" },
+            () => 0,
+            "待命时间（秒），默认为0"
+        );
+        var portOption = new Option<int>(
+            new string[] { "--port", "-p" },
+            () => 8022,
+            "监听端口，默认 8022"
+       );
 
-                // 创建 HttpListener 以监听 HTTP 连接
-                HttpListener listener = new HttpListener();
-                listener.Prefixes.Add($"http://{ipAddress}:{port}/");
-                listener.Start();
-                Console.WriteLine($"HTTP server started on {ipAddress}:{port}");
-
-                // 创建一个3分钟的定时器
-                timer = new System.Timers.Timer(3 * 60 * 1000); // 3分钟，单位是毫秒
-                timer.Elapsed += TimerElapsed;
-                timer.AutoReset = false; // 设置为 false，即定时器只触发一次
-                timer.Start();
-
-                while (true)
+        // 创建根命令并添加选项
+        rootCommand.AddOption(waitingTimeOption);
+        rootCommand.AddOption(portOption);
+        Func<int, int, Task> action = async (time, port) =>
                 {
-                    // 接受客户端连接并处理请求
-                    var context = await listener.GetContextAsync();
-                    Task.Run(() => ProcessHttpRequest(context)); // 使用 Task.Run 启动新的线程处理请求
-                }
-            }
-            else
-            {
-                // 如果互斥体已存在，则关闭当前实例
-                Console.WriteLine("Another instance is already running. Exiting...");
-                Thread.Sleep(2000); // 为了让用户看到提示信息，程序暂停2秒钟
-            }
-        }
+                    using (Mutex mutex = new Mutex(true, "OneNoteSearcher", out bool createdNew))
+                    {
+                        if (createdNew)
+                        {
+                            // 设置 HTTP 服务监听地址和端口号
+                            string ipAddress = "127.0.0.1";
+
+                            // 创建 HttpListener 以监听 HTTP 连接
+                            HttpListener listener = new HttpListener();
+                            listener.Prefixes.Add($"http://{ipAddress}:{port}/");
+                            listener.Start();
+                            Console.WriteLine($"HTTP server started on {ipAddress}:{port}");
+
+                            if (time > 0)
+                            {
+                                time *= 1000;
+                                timer = new System.Timers.Timer(time);
+                                timer.Elapsed += TimerElapsed;
+                                timer.AutoReset = false;
+                                timer.Start();
+                            }
+
+                            while (true)
+                            {
+                                // 接受客户端连接并处理请求
+                                var context = await listener.GetContextAsync();
+                                _ = Task.Run(() => ProcessHttpRequest(context, time)); // 使用 Task.Run 启动新的线程处理请求
+                            }
+                        }
+                        else
+                        {
+                            // 如果互斥体已存在，则关闭当前实例
+                            Console.WriteLine("Another instance is already running. Exiting...");
+                            Thread.Sleep(2000); // 为了让用户看到提示信息，程序暂停2秒钟
+                        }
+                    }
+                };
+        rootCommand.Handler = CommandHandler.Create<int, int>(action);
+        await rootCommand.InvokeAsync(args);
     }
 
     private static void TimerElapsed(object sender, ElapsedEventArgs e)
     {
-        Console.WriteLine("3分钟已经过去了，程序即将自动关闭...");
-        // 关闭程序
+        Thread.Sleep(2000);
+        Console.WriteLine("Timeout, The instance will exit after 2 seconds");
         Environment.Exit(0);
     }
 
-    static async Task ProcessHttpRequest(HttpListenerContext context)
+    static async Task ProcessHttpRequest(HttpListenerContext context, int waiting)
     {
-        timer.Stop();
-        timer.Interval = 3 * 60 * 1000; // 重置为3分钟
-        timer.Start();
+        if (waiting > 0)
+        {
+            timer.Stop();
+            timer.Interval = waiting;
+            timer.Start();
+        }
 
         // 获取请求路径
         string path = context.Request.Url.AbsolutePath;
@@ -102,7 +130,6 @@ class Program
         // 设置响应状态码和内容类型
         context.Response.StatusCode = (int)HttpStatusCode.OK;
         context.Response.ContentType = "application/json";
-
         // 发送响应
         byte[] buffer = Encoding.UTF8.GetBytes(responseMessage);
         context.Response.ContentLength64 = buffer.Length;

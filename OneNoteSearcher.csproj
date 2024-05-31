@@ -9,6 +9,9 @@
 		<PublishSingleFile>true</PublishSingleFile>
 		<AssemblyName>OneNoteSearcher</AssemblyName>
 		<AssemblyDescription>A lightweight backend service for searching OneNote pages</AssemblyDescription>
+		<Configurations>Debug;Release;Test</Configurations>
+		<StartupObject></StartupObject>
+		<Version>0.1.1</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -21,6 +24,7 @@
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
 		<PackageReference Include="ScipBe.Common.Office.OneNote" Version="3.0.1" />
 		<PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+		<PackageReference Include="System.CommandLine" Version="2.0.0-beta1" />
 	</ItemGroup>
 
 </Project>
