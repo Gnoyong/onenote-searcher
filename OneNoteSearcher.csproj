@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<OutputType>Exe</OutputType>
+		<OutputType>Library</OutputType>
 		<TargetFramework>net481</TargetFramework>
 		<LangVersion>9.0</LangVersion>
 		<PlatformTarget>AnyCPU</PlatformTarget>
@@ -24,7 +24,6 @@
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
 		<PackageReference Include="ScipBe.Common.Office.OneNote" Version="3.0.1" />
 		<PackageReference Include="System.Drawing.Common" Version="6.0.0" />
-		<PackageReference Include="System.CommandLine" Version="2.0.0-beta1" />
 	</ItemGroup>
 
 </Project>
