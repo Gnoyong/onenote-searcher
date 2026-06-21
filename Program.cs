@@ -21,7 +21,7 @@ namespace OneNoteSearcher
         {
             if (string.IsNullOrEmpty(id))
             {
-                return "Missing id parameter";
+                return;
             }
 
             Microsoft.Office.Interop.OneNote.Application oneNote;
